@@ -7,24 +7,7 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Web3Auth } from '@web3auth/node-sdk';
-import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
-
-const web3auth = new Web3Auth({
-  clientId:
-    'BMHtOClEhyyzgsbLlWWucA4quav7IjqIIXwM9-aWaoRM-a45UZZd5R0DodBkwQv7bN9IvRL0eU0gXwGgnNeRjLQ', // Get your Client ID from Web3Auth Dashboard
-  web3AuthNetwork: 'sapphire_devnet', // Get your Network from Web3Auth Dashboard
-});
-
-const ethereumProvider = new EthereumPrivateKeyProvider({
-  config: {
-    chainConfig: {
-      chainNamespace: 'eip155',
-      chainId: '0x1',
-      rpcTarget: 'https://rpc.ankr.com/eth',
-    },
-  },
-});
+import { createProvider } from '@/lib/web3auth';
 
 const afterCallback: AfterCallbackAppRoute = async (
   req: NextRequest,
@@ -42,19 +25,18 @@ const afterCallback: AfterCallbackAppRoute = async (
     payload,
     process.env.SUPABASE_SIGNING_SECRET
   );
-  console.log('idToken', session.idToken);
 
   /* ========== web3auth ========== */
-  web3auth.init({ provider: ethereumProvider });
-  const provider = await web3auth.connect({
-    verifier: 'node-sdk-test', // replace with your verifier name
-    verifierId: 'revivedtomorrow@gmail.com', // replace with your verifier id's value, for example, sub value of JWT Token, or email address.
-    idToken: session.idToken || '', // replace with your newly created unused JWT Token.
-  });
+  const provider = await createProvider(session.idToken);
   const eth_public_keyes = (await provider!.request({
     method: 'eth_accounts',
   })) as string[];
+  const eth_private_key = await provider!.request({
+    method: 'eth_private_key',
+  });
   session.user.eth_public_key = eth_public_keyes[0];
+  session.user.eth_private_key = eth_private_key;
+
   return session;
 };
 

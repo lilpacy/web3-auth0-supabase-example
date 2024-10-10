@@ -24,7 +24,7 @@ export default function Home() {
       )}
       <div className="mt-8 p-4 bg-white rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-2 text-gray-700">Console Output</h2>
-        <pre className="whitespace-pre-wrap bg-gray-100 p-3 rounded text-gray-600">{consoleOutput}</pre>
+        <pre className="whitespace-pre-wrap break-words bg-gray-100 p-3 rounded text-gray-600">{consoleOutput}</pre>
       </div>
     </div>
   );
