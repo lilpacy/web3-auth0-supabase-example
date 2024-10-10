@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { checkSupabaseConnection, getSupabase } from '@/lib/supabase';
-import { User, Key, Database, LogOut, Link } from 'lucide-react';
+import { checkSupabaseConnection } from '@/lib/supabase';
+import { User, Key, Database, LogOut } from 'lucide-react';
 
 type LoggedInViewProps = {
   user: any;

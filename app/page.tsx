@@ -1,10 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { User, Key, Database, LogOut, LogIn } from 'lucide-react';
-import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import LoggedInView from '@/components/logged-in-view';
 import UnloggedInView from '@/components/unlogged-in-view';
