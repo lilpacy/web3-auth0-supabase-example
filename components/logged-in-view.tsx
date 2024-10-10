@@ -2,7 +2,31 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { User, Key, Database, LogOut, Link } from 'lucide-react';
 
-export default function LoggedInView({ handleAction }: { handleAction: (action: string) => void }) {
+type LoggedInViewProps = {
+  user: any;
+  setConsoleOutput: (output: string) => void;
+}
+
+export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewProps) {
+
+  const handleAction = (action: string) => {
+    switch (action) {
+      case 'getUserInfo':
+        setConsoleOutput(JSON.stringify(user, null, 2));
+        break;
+      case 'getPrivateKey':
+        setConsoleOutput(`${action} action triggered`);
+        break;
+      case 'checkSupabaseConnection':
+        setConsoleOutput(`${action} action triggered`);
+        break;
+      case 'logout':
+        setConsoleOutput(`${action} action triggered`);
+        window.location.href = '/api/auth/logout';
+        break;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

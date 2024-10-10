@@ -8,35 +8,17 @@ import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import LoggedInView from '@/components/logged-in-view';
 import UnloggedInView from '@/components/unlogged-in-view';
-import { redirect } from 'next/navigation';
 
 export default function Home() {
   const { user, isLoading } = useUser()
   const [consoleOutput, setConsoleOutput] = useState('');
 
-  const handleAction = (action: string) => {
-    switch (action) {
-      case 'getUserInfo':
-        setConsoleOutput(JSON.stringify(user, null, 2));
-        break;
-      case 'getPrivateKey':
-        setConsoleOutput(`${action} action triggered`);
-        break;
-      case 'checkSupabaseConnection':
-        setConsoleOutput(`${action} action triggered`);
-        break;
-      case 'logout':
-        setConsoleOutput(`${action} action triggered`);
-        window.location.href = '/api/auth/logout';
-        break;
-    }
-  };
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Blockchain Dashboard</h1>
       {user ? (
-        <LoggedInView handleAction={handleAction} />
+        <LoggedInView setConsoleOutput={setConsoleOutput} user={user} />
       ) : (
         <UnloggedInView />
       )}
