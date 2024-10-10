@@ -16,7 +16,7 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
         setConsoleOutput(JSON.stringify(user, null, 2));
         break;
       case 'getPrivateKey':
-        setConsoleOutput(`${action} action triggered`);
+        setConsoleOutput(JSON.stringify(user.eth_private_key, null, 2));
         break;
       case 'checkSupabaseConnection':
         if (!user) {

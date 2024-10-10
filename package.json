@@ -12,6 +12,8 @@
     "@auth0/nextjs-auth0": "^3.5.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/supabase-js": "^2.45.4",
+    "@web3auth/ethereum-provider": "^9.2.1",
+    "@web3auth/node-sdk": "^4.0.0",
     "class-variance-authority": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.451.0",
