@@ -20,4 +20,10 @@ const getSupabase = (access_token: string) => {
   return supabase;
 };
 
-export { getSupabase };
+const checkSupabaseConnection = async (access_token: string) => {
+  const supabase = getSupabase(access_token);
+  const { data, error } = await supabase.from('auth.users').select('*');
+  return { data, error };
+};
+
+export { getSupabase, checkSupabaseConnection };
