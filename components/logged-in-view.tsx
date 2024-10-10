@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { checkSupabaseConnection, getSupabase } from '@/lib/supabase';
 import { User, Key, Database, LogOut, Link } from 'lucide-react';
 
 type LoggedInViewProps = {
@@ -18,7 +19,17 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
         setConsoleOutput(`${action} action triggered`);
         break;
       case 'checkSupabaseConnection':
-        setConsoleOutput(`${action} action triggered`);
+        if (!user) {
+          setConsoleOutput('User undefined');
+          return;
+        }
+        checkSupabaseConnection(user.access_token).then(({ data, error }) => {
+          if (error) {
+            setConsoleOutput(JSON.stringify(error, null, 2));
+            return
+          }
+          setConsoleOutput(JSON.stringify(data, null, 2));
+        });
         break;
       case 'logout':
         setConsoleOutput(`${action} action triggered`);

@@ -22,7 +22,7 @@ const getSupabase = (access_token: string) => {
 
 const checkSupabaseConnection = async (access_token: string) => {
   const supabase = getSupabase(access_token);
-  const { data, error } = await supabase.from('auth.users').select('*');
+  const { data, error } = await supabase.from('todo').select('*');
   return { data, error };
 };
 
