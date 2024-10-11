@@ -1,9 +1,9 @@
 import { Web3Auth } from '@web3auth/node-sdk';
 import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
+import { IProvider } from '@web3auth/base';
 
 export const web3auth = new Web3Auth({
-  clientId:
-    'BMHtOClEhyyzgsbLlWWucA4quav7IjqIIXwM9-aWaoRM-a45UZZd5R0DodBkwQv7bN9IvRL0eU0gXwGgnNeRjLQ', // Get your Client ID from Web3Auth Dashboard
+  clientId: process.env.WEB3AUTH_CLIENT_ID!, // Get your Client ID from Web3Auth Dashboard
   web3AuthNetwork: 'sapphire_devnet', // Get your Network from Web3Auth Dashboard
 });
 
@@ -17,14 +17,16 @@ export const ethereumProvider = new EthereumPrivateKeyProvider({
   },
 });
 
-export const createProvider = async (idToken?: string) => {
+export const createProvider: (
+  idToken?: string
+) => Promise<IProvider | null> = async idToken => {
   if (!idToken) {
     throw new Error('No idToken provided');
   }
   web3auth.init({ provider: ethereumProvider });
   const provider = await web3auth.connect({
-    verifier: 'node-sdk-test', // replace with your verifier name
-    verifierId: 'revivedtomorrow@gmail.com', // replace with your verifier id's value, for example, sub value of JWT Token, or email address.
+    verifier: process.env.WEB3AUTH_VERIFIER_NAME!, // replace with your verifier name
+    verifierId: process.env.WEB3AUTH_VERIFIER_ID!, // replace with your verifier id's value, for example, sub value of JWT Token, or email address.
     idToken: idToken, // replace with your newly created unused JWT Token.
   });
   return provider;
