@@ -4,6 +4,7 @@ const getSupabase = (access_token: string) => {
   const options = {};
 
   if (access_token) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (options as any).global = {
       headers: {
         Authorization: `Bearer ${access_token}`,

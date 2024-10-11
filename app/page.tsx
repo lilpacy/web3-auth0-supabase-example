@@ -6,9 +6,8 @@ import LoggedInView from '@/components/logged-in-view';
 import UnloggedInView from '@/components/unlogged-in-view';
 
 export default function Home() {
-  const { user, isLoading } = useUser()
+  const { user } = useUser()
   const [consoleOutput, setConsoleOutput] = useState('');
-
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">

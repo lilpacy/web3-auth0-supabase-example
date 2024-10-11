@@ -4,7 +4,7 @@ import {
   handleAuth,
   handleCallback,
 } from '@auth0/nextjs-auth0';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createProvider } from '@/lib/web3auth';
@@ -18,12 +18,12 @@ const afterCallback: AfterCallbackAppRoute = async (
     userId: session.user.sub,
     exp: Math.floor(Date.now() / 1000) + 60 * 60,
   };
-  if (!process.env.SUPABASE_SIGNING_SECRET) {
-    throw new Error('SUPABASE_SIGNING_SECRET environment variable is not set');
+  if (!process.env.SUPABASE_JWT_SECRET) {
+    throw new Error('SUPABASE_JWT_SECRET environment variable is not set');
   }
-  session.user.accessToken = jwt.sign(
+  session.user.access_token = jwt.sign(
     payload,
-    process.env.SUPABASE_SIGNING_SECRET
+    process.env.SUPABASE_JWT_SECRET
   );
 
   /* ========== web3auth ========== */

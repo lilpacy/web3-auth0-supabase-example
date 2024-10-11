@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { checkSupabaseConnection } from '@/lib/supabase';
+import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { User, Key, Database, LogOut } from 'lucide-react';
 
 type LoggedInViewProps = {
-  user: any;
+  user: UserProfile;
   setConsoleOutput: (output: string) => void;
 }
 
@@ -23,7 +24,7 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
           setConsoleOutput('User undefined');
           return;
         }
-        checkSupabaseConnection(user.access_token).then(({ data, error }) => {
+        checkSupabaseConnection(user.access_token as string).then(({ data, error }) => {
           if (error) {
             setConsoleOutput(JSON.stringify(error, null, 2));
             return
