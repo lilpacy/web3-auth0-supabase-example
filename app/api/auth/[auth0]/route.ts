@@ -27,7 +27,7 @@ const afterCallback: AfterCallbackAppRoute = async (
   );
 
   /* ========== web3auth ========== */
-  const provider = await createProvider(session.idToken);
+  const provider = await createProvider(session.user.sub, session.idToken);
   if (!provider) throw new Error('Failed to create provider');
   const eth_public_keyes = (await provider.request({
     method: 'eth_accounts',

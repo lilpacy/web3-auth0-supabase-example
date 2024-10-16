@@ -18,15 +18,15 @@ export const ethereumProvider = new EthereumPrivateKeyProvider({
 });
 
 export const createProvider: (
+  sub: string,
   idToken?: string
-) => Promise<IProvider | null> = async idToken => {
-  if (!idToken) {
-    throw new Error('No idToken provided');
-  }
+) => Promise<IProvider | null> = async (sub, idToken) => {
+  if (!sub) throw new Error('No sub provided');
+  if (!idToken) throw new Error('No idToken provided');
   web3auth.init({ provider: ethereumProvider });
   const provider = await web3auth.connect({
     verifier: process.env.WEB3AUTH_VERIFIER_NAME!, // replace with your verifier name
-    verifierId: process.env.WEB3AUTH_VERIFIER_ID!, // replace with your verifier id's value, for example, sub value of JWT Token, or email address.
+    verifierId: sub, // replace with your verifier id's value, for example, sub value of JWT Token, or email address.
     idToken: idToken, // replace with your newly created unused JWT Token.
   });
   return provider;
