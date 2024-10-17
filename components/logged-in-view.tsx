@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { checkSupabaseConnection } from '@/lib/supabase';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import { User, Key, Database, LogOut } from 'lucide-react';
+import { User, Database, LogOut } from 'lucide-react';
 
 type LoggedInViewProps = {
   user: UserProfile;
