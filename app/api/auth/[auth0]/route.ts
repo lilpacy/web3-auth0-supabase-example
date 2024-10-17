@@ -32,11 +32,11 @@ const afterCallback: AfterCallbackAppRoute = async (
   const eth_public_keyes = (await provider.request({
     method: 'eth_accounts',
   })) as string[];
-  const eth_private_key = await provider.request({
-    method: 'eth_private_key',
-  });
+  // const eth_private_key = await provider.request({
+  //   method: 'eth_private_key',
+  // });
   session.user.eth_public_key = eth_public_keyes[0];
-  session.user.eth_private_key = eth_private_key;
+  // session.user.eth_private_key = eth_private_key;
 
   return session;
 };

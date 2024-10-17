@@ -16,9 +16,9 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
       case 'getUserInfo':
         setConsoleOutput(JSON.stringify(user, null, 2));
         break;
-      case 'getPrivateKey':
-        setConsoleOutput(JSON.stringify(user.eth_private_key, null, 2));
-        break;
+      // case 'getPrivateKey':
+      //   setConsoleOutput(JSON.stringify(user.eth_private_key, null, 2));
+      //   break;
       case 'checkSupabaseConnection':
         if (!user) {
           setConsoleOutput('User undefined');
@@ -44,7 +44,7 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {[
           { label: 'Get User Info', icon: User, action: 'getUserInfo' },
-          { label: 'Get Private Key', icon: Key, action: 'getPrivateKey' },
+          // { label: 'Get Private Key', icon: Key, action: 'getPrivateKey' },
           { label: 'Check Supabase Connection', icon: Database, action: 'checkSupabaseConnection' },
         ].map((item, index) => (
           <Card key={index} className="p-4 hover:shadow-lg transition-shadow bg-white">
