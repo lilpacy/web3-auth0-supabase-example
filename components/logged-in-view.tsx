@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { checkSupabaseConnection } from '@/lib/supabase';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import { User, Database, LogOut } from 'lucide-react';
+import { User, Database, LogOut, Key } from 'lucide-react';
 
 type LoggedInViewProps = {
   user: UserProfile;
@@ -16,9 +16,16 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
       case 'getUserInfo':
         setConsoleOutput(JSON.stringify(user, null, 2));
         break;
-      // case 'getPrivateKey':
-      //   setConsoleOutput(JSON.stringify(user.eth_private_key, null, 2));
-      //   break;
+      case 'getPrivateKey':
+        fetch('/api/auth/privatekey', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(res => res.json()).then(({ privateKey }) => {
+          setConsoleOutput(JSON.stringify(privateKey, null, 2));
+        });
+        break;
       case 'checkSupabaseConnection':
         if (!user) {
           setConsoleOutput('User undefined');
@@ -44,7 +51,7 @@ export default function LoggedInView({ setConsoleOutput, user }: LoggedInViewPro
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {[
           { label: 'Get User Info', icon: User, action: 'getUserInfo' },
-          // { label: 'Get Private Key', icon: Key, action: 'getPrivateKey' },
+          { label: 'Get Private Key', icon: Key, action: 'getPrivateKey' },
           { label: 'Check Supabase Connection', icon: Database, action: 'checkSupabaseConnection' },
         ].map((item, index) => (
           <Card key={index} className="p-4 hover:shadow-lg transition-shadow bg-white">

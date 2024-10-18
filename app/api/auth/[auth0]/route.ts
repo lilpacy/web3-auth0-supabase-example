@@ -3,6 +3,7 @@ import {
   type Session,
   handleAuth,
   handleCallback,
+  handleLogin,
 } from '@auth0/nextjs-auth0';
 import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
@@ -42,6 +43,11 @@ const afterCallback: AfterCallbackAppRoute = async (
 };
 
 export const GET = handleAuth({
+  login: handleLogin({
+    authorizationParams: {
+      scope: 'openid profile email offline_access', // Add offline_access scope for refresh token
+    },
+  }),
   async callback(req: NextApiRequest, res: NextApiResponse) {
     try {
       const response = await handleCallback(req, res, {

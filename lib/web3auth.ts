@@ -31,3 +31,15 @@ export const createProvider: (
   });
   return provider;
 };
+
+export const getPrivateKey: (
+  sub: string,
+  idToken: string
+) => Promise<string> = async (sub, idToken) => {
+  const provider = await createProvider(sub, idToken);
+  if (!provider) throw new Error('No provider created');
+  const privateKey = (await provider.request({
+    method: 'eth_private_key',
+  })) as string;
+  return privateKey;
+};
